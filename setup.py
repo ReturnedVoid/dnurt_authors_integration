@@ -9,6 +9,6 @@ setup(name='dnurt_authors_integration',
       author='Andrey Nechaev',
       author_email='andrewnech@gmail.com',
       license='DNURT',
-      packages=['dnurtdb', 'scopus', 'wos'],
-      keywords='DNURT author scopus wos'
+      packages=['dnurtdb', 'scopus', 'web_of_science'],
+      keywords='DNURT author scopus web_of_science'
 )
