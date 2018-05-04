@@ -90,7 +90,7 @@ class ScopusAuthor:
         return '{0} {1} {2} {3} {4}' \
             .format(self.fullname, self.sc_id, self.doc_count, self.cited_by_count, self.citation_count)
 
-
+# ------------------------------------------------------DEPRECATED------------------------------------------------------
 def get_dnurt_authors():
     """get all DNURT authors"""
     srch = ElsSearch('AF-ID({})'.format(DNURT_SCOPUS_ID), 'author')
@@ -101,6 +101,15 @@ def get_dnurt_authors():
         a_info = get_author(author)
         info.append(a_info)
     return info
+
+
+def get_doc(idd):
+    scp_doc = AbsDoc(scp_id='{0}'.format(idd))
+    if scp_doc.read(api_client):
+        print("scp_doc.title: ", scp_doc.data)
+    else:
+        print("Read document failed.")
+# ------------------------------------------------------DEPRECATED------------------------------------------------------
 
 
 def get_author(adata):
@@ -118,21 +127,14 @@ def get_author_by_id(_id):
         print("Read author failed.")
 
 
-def get_doc(idd):
-    scp_doc = AbsDoc(scp_id='{0}'.format(idd))
-    if scp_doc.read(api_client):
-        print("scp_doc.title: ", scp_doc.data)
-    else:
-        print("Read document failed.")
-
-
 def fetch_docs_by_author_id(id):
     doc_srch = ElsSearch('AU-ID({0})'.format(id), 'scopus')
     doc_srch.execute(api_client, get_all=True)
     return doc_srch.results
 
 
-def update_bd(ids):
+def update_bd():
+    ids = db.get_author_ids()
     for id in ids:
         author = get_author_by_id(id)
         db.update(author)
