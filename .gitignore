@@ -5,3 +5,12 @@ libs/scopus/config.json
 libs/scopus/logs
 libs/dnurtdb/dbconfig.json
 /.idea
+libs/scopus/__pycache__/__init__.cpython-36.pyc
+libs/web_of_science/__pycache__/__init__.cpython-36.pyc
+libs/gooscholar/__pycache__/__init__.cpython-36.pyc
+libs/dnurtdb/__pycache__/__init__.cpython-36.pyc
+libs/__pycache__/__init__.cpython-36.pyc
+libs/dnurtdb/__pycache__/database.cpython-36.pyc
+libs/gooscholar/__pycache__/client.cpython-36.pyc
+libs/scopus/__pycache__/client.cpython-36.pyc
+libs/web_of_science/__pycache__/client.cpython-36.pyc
