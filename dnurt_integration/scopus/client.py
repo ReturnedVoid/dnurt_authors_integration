@@ -5,9 +5,9 @@ from elsapy.elsdoc import AbsDoc
 from elsapy.elsprofile import ElsAuthor
 from elsapy.elssearch import ElsSearch
 
-from libs.dnurtdb import database as db
+from dnurt_integration.dnurtdb import database as db
 
-con_file = open("libs/scopus/config.json")
+con_file = open("dnurt_integration/scopus/config.json")
 config = json.load(con_file)
 con_file.close()
 
