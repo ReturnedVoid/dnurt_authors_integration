@@ -1,13 +1,13 @@
+import json
+
 from elsapy.elsclient import ElsClient
 from elsapy.elsdoc import AbsDoc
 from elsapy.elsprofile import ElsAuthor
 from elsapy.elssearch import ElsSearch
 
-from dnurtdb import database as db
+from libs.dnurtdb import database as db
 
-import json
-
-con_file = open("scopus/config.json")
+con_file = open("libs/scopus/config.json")
 config = json.load(con_file)
 con_file.close()
 

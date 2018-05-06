@@ -2,7 +2,7 @@ import json
 import psycopg2
 
 # open configuration files
-db_conf = open("dnurtdb/dbconfig.json")
+db_conf = open("libs/dnurtdb/dbconfig.json")
 db_config = json.load(db_conf)
 db_conf.close()
 

@@ -1,7 +1,7 @@
 /venv
 /data
 /logs
-scopus/config.json
-scopus/logs
-dnurtdb/dbconfig.json
+libs/scopus/config.json
+libs/scopus/logs
+libs/dnurtdb/dbconfig.json
 /.idea
