@@ -28,7 +28,7 @@ class ScopusAuthor:
     @property
     def fullname(self):
         fname = '{} {}'.format(self.author_data['author-profile']['preferred-name']['surname'],
-                              self.author_data['author-profile']['preferred-name']['initials'])
+                               self.author_data['author-profile']['preferred-name']['initials'])
 
         is_aped = True if "'" in fname else False
         if is_aped:
@@ -91,6 +91,8 @@ class ScopusAuthor:
             .format(self.fullname, self.sc_id, self.doc_count, self.cited_by_count, self.citation_count)
 
 # ------------------------------------------------------DEPRECATED------------------------------------------------------
+
+
 def get_dnurt_authors():
     """get all DNURT authors"""
     srch = ElsSearch('AF-ID({})'.format(DNURT_SCOPUS_ID), 'author')
