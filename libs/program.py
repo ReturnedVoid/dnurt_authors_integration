@@ -33,6 +33,7 @@ def update_scopus():
 def update_all():
     update_scopus()
     update_gscholar()
+    update_wos()
 
 
 def update_gscholar():
