@@ -4,10 +4,11 @@ from elsapy.elsclient import ElsClient
 from elsapy.elsdoc import AbsDoc
 from elsapy.elsprofile import ElsAuthor
 from elsapy.elssearch import ElsSearch
+import os
 
 from dnurt_integration.dnurtdb import database as db
 
-con_file = open("dnurt_integration/scopus/config.json")
+con_file = open(os.path.join(os.path.dirname(__file__), "config.json"))
 config = json.load(con_file)
 con_file.close()
 
