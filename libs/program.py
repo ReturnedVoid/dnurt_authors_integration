@@ -1,12 +1,15 @@
 # Executive module
 import sys
 
+from os import system
+
 from libs.scopus import client as sc_client
 from libs.web_of_science import client as w_client
 from libs.gooscholar import client as g_client
 
 
 def update():
+    system('clear')
     arg = None
     if sys.argv[1]:
         arg = sys.argv[1]
