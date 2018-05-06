@@ -4,7 +4,7 @@ setup(name='dnurt_authors_integration',
       version='1.0.0',
       description='DNURT app for authors integration',
       long_description='',
-      install_requires=['psycopg2', 'elsapy'],
+      install_requires=['psycopg2', 'elsapy', 'wos'],
       url='https://github.com/ReturnedVoid/dnurt_authors_integration',
       author='Andrey Nechaev',
       author_email='andrewnech@gmail.com',
@@ -14,6 +14,6 @@ setup(name='dnurt_authors_integration',
 
       entry_points={
           'console_scripts':
-              ['update = libs.test:update']
+              ['update = libs.program:update']
       }
       )
