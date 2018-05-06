@@ -12,7 +12,8 @@ connect_str = "dbname={0} user={1} password={2}" \
 conn = None
 
 tables = ('authors',)
-columns = ('id', 'fullname', 'cited_by_count', 'citation_count', 'sc_id', 'hirsha', 'doc_count')
+columns = ('id', 'fullname', 'cited_by_count',
+           'citation_count', 'sc_id', 'hirsha', 'doc_count')
 
 
 def connect():
