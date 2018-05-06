@@ -133,11 +133,11 @@ def fetch_docs_by_author_id(id):
     return doc_srch.results
 
 
-def update_bd():
+def update_db():
     ids = db.get_author_ids()
     for id in ids:
         author = get_author_by_id(id)
-        db.update(author)
+        db.scopus_update(author)
 
     db.disconnect()
 

@@ -49,7 +49,7 @@ def get_author_ids():
         return ids
 
 
-def update(author):
+def scopus_update(author):
     if connect():
         cursor = get_cursor()
         cursor.execute("""update {0} set {1}='{2}', {3}='{4}', {5}='{6}', {7}='{8}', {9}='{10}' where {11}='{12}'"""
