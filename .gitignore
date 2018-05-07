@@ -1,9 +1,7 @@
 /venv
 /data
 /logs
-dnurt_integration/scopus/config.json
 dnurt_integration/scopus/logs
-dnurt_integration/dnurtdb/dbconfig.json
 /.idea
 dnurt_integration/scopus/__pycache__/__init__.cpython-36.pyc
 dnurt_integration/web_of_science/__pycache__/__init__.cpython-36.pyc
