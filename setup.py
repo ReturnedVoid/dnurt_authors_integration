@@ -14,7 +14,7 @@ setup(name='dnurt_authors_integration',
 
       entry_points={
           'console_scripts':
-              ['update = dnurt_integration.program:update']
+              ['authors_update = dnurt_integration.program:update']
       },
       package_data={
           '': ['*.json']
