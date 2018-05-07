@@ -9,7 +9,7 @@ The python module for updating DNURT database using scopus, wos and gscholar api
 # Run script
 For running script you can simply type:
 `authors_update -x` where x is one of the folowing parameters:
-`-s` - Updates only scopus information.
-`-w` - Updates only wos information. 
-`-g` - Updates only gscholar information.
-`-a` - Updates all.
+*`-s` - updates only scopus information.
+*`-w` - updates only wos information. 
+*`-g` - updates only gscholar information.
+*`-a` - updates all.
