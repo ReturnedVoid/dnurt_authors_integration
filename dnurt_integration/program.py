@@ -27,6 +27,7 @@ def update():
 def update_scopus():
     print('Updating scopus info...')
     sc_client.update_db()
+    sc_client.clear_logs()
     print('Done.')
 
 
