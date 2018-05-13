@@ -38,7 +38,7 @@ def update_all():
 
 def update_gscholar():
     print('Updating gscholar info...')
-    # g_client.update_db()
+    g_client.update_db()
     print('Done.')
 
 
