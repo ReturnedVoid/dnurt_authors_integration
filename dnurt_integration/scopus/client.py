@@ -5,6 +5,8 @@ from elsapy.elsdoc import AbsDoc
 from elsapy.elsprofile import ElsAuthor
 from elsapy.elssearch import ElsSearch
 import os
+import shutil as sh
+from pathlib import Path
 
 from dnurt_integration.dnurtdb import database as db
 
@@ -134,6 +136,12 @@ def fetch_docs_by_author_id(id):
     doc_srch = ElsSearch('AU-ID({0})'.format(id), 'scopus')
     doc_srch.execute(api_client, get_all=True)
     return doc_srch.results
+
+
+def clear_logs():
+    path = str(Path.home())
+    logs_path = '{0}/logs'.format(path)
+    sh.rmtree(logs_path)
 
 
 def update_db():
