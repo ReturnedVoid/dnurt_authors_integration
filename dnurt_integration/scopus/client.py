@@ -137,7 +137,7 @@ def fetch_docs_by_author_id(id):
 
 
 def update_db():
-    ids = db.get_author_ids()
+    ids = db.get_sc_authors_ids()
     for id in ids:
         author = get_author_by_id(id)
         db.scopus_update(author)
