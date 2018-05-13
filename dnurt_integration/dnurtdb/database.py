@@ -39,7 +39,7 @@ def disconnect():
         print('Error: db connection close()')
 
 
-def get_author_ids():
+def get_sc_authors_ids():
     if connect():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(sc_columns[0], tables[0]))
