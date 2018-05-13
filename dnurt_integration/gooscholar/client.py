@@ -37,7 +37,7 @@ class GscholarAuthor:
 def get_author_by_id(_id):
     source = urllib \
         .request.urlopen('https://scholar.google.com.ua/citations?user={}&hl=en'
-                         .format('CsPvWKsAAAAJ')).read()
+                         .format(_id)).read()
     soup = bs.BeautifulSoup(source, 'lxml')
     tds = soup.find_all('td')
 
