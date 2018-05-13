@@ -6,6 +6,8 @@ import urllib.request
 class GscholarAuthor:
     def __init__(self, _id):
         self.gs_id = _id
+        self.doc_count = 0
+        self.h_index = 0
 
     @property
     def gs_id(self):
@@ -41,7 +43,8 @@ def get_author_by_id(_id):
 
     author = GscholarAuthor(_id)
     author.h_index = tds[4].string
-    author.doc_count = '2'
+    #TODO how to get doc_coount ?
+    # author.doc_count = '2'
     return author
 
 
