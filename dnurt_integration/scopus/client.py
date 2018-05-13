@@ -143,7 +143,3 @@ def update_db():
         db.scopus_update(author)
 
     db.disconnect()
-
-
-# TODO
-# Add search by info from DB
