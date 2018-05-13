@@ -15,6 +15,7 @@ conn = None
 tables = ('authors',)
 columns = ('id, fullname')
 sc_columns = ('sc_id', 'h_scopus', 'sc_doc_count')
+gs_columns = ('gs_id', 'h_gscholar', 'gs_doc_count')
 
 
 def connect():
@@ -42,10 +43,22 @@ def disconnect():
 def get_sc_authors_ids():
     if connect():
         cursor = get_cursor()
-        cursor.execute("""select {0} from {1}""".format(sc_columns[0], tables[0]))
+        cursor.execute("""select {0} from {1}""".format(
+            sc_columns[0], tables[0]))
         ids = []
-        for id in cursor.fetchall():
-            ids.append(id[0])
+        for _id in cursor.fetchall():
+            ids.append(_id[0])
+        return ids
+
+
+def get_gs_authors_ids():
+    if connect():
+        cursor = get_cursor()
+        cursor.execute("""select {0} from {1}""".format(
+            gs_columns[0], tables[0]))
+        ids = []
+        for _id in cursor.fetchall():
+            ids.append(_id[0])
         return ids
 
 
@@ -57,4 +70,15 @@ def scopus_update(author):
                                sc_columns[1], author.h_index,
                                sc_columns[2], author.doc_count,
                                sc_columns[0], author.sc_id))
+    conn.commit()
+
+
+def gscholar_update(author):
+    if connect():
+        cursor = get_cursor()
+        cursor.execute("""update {0} set {1}='{2}', {3}='{4}' where {5}='{6}'"""
+                       .format(tables[0],
+                               gs_columns[1], author.h_index,
+                               gs_columns[2], author.doc_count,
+                               gs_columns[0], author.gs_id))
     conn.commit()
