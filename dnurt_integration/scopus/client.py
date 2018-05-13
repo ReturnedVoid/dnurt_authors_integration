@@ -93,29 +93,6 @@ class ScopusAuthor:
         return '{0} {1} {2} {3} {4}' \
             .format(self.fullname, self.sc_id, self.doc_count, self.cited_by_count, self.citation_count)
 
-# ------------------------------------------------------DEPRECATED------------------------------------------------------
-
-
-def get_dnurt_authors():
-    """get all DNURT authors"""
-    srch = ElsSearch('AF-ID({})'.format(DNURT_SCOPUS_ID), 'author')
-    srch.execute(api_client, get_all=True)
-
-    info = []
-    for author in srch.results:
-        a_info = get_author(author)
-        info.append(a_info)
-    return info
-
-
-def get_doc(idd):
-    scp_doc = AbsDoc(scp_id='{0}'.format(idd))
-    if scp_doc.read(api_client):
-        print("scp_doc.title: ", scp_doc.data)
-    else:
-        print("Read document failed.")
-# ------------------------------------------------------DEPRECATED------------------------------------------------------
-
 
 def get_author(adata):
     """parse search result and return compact info"""
