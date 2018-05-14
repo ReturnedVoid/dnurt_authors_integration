@@ -18,14 +18,6 @@ class GscholarAuthor:
         self._gs_id = val
 
     @property
-    def doc_count(self):
-        return self._doc_count
-
-    @doc_count.setter
-    def doc_count(self, val):
-        self._doc_count = val
-
-    @property
     def h_index(self):
         return self._h_index
 
@@ -43,8 +35,7 @@ def get_author_by_id(_id):
 
     author = GscholarAuthor(_id)
     author.h_index = tds[4].string
-    #TODO how to get doc_coount ?
-    # author.doc_count = '2'
+
     return author
 
 
