@@ -16,6 +16,7 @@ tables = ('authors',)
 columns = ('id, fullname')
 sc_columns = ('sc_id', 'h_scopus', 'sc_doc_count')
 gs_columns = ('gs_id', 'h_gscholar', 'gs_doc_count')
+wos_columns = ('wos_id', 'h_wos', 'wos_doc_count')
 
 
 def connect():
@@ -62,6 +63,18 @@ def get_gs_authors_ids():
         return ids
 
 
+def get_wos_authors_ids():
+    # if connect():
+    #     cursor = get_cursor()
+    #     cursor.execute("""select {0} from {1}""".format(
+    #         wos_columns[0], tables[0]))
+    #     ids = []
+    #     for _id in cursor.fetchall():
+    #         ids.append(_id[0])
+    #     return ids
+    return ['A-7364-2016']
+
+
 def scopus_update(author):
     if connect():
         cursor = get_cursor()
@@ -81,4 +94,15 @@ def gscholar_update(author):
                                gs_columns[1], author.h_index,
                                gs_columns[2], author.doc_count,
                                gs_columns[0], author.gs_id))
+    conn.commit()
+
+
+def wos_update(author):
+    if connect():
+        cursor = get_cursor()
+        cursor.execute("""update {0} set {1}='{2}', {3}='{4}' where {5}='{6}'"""
+                       .format(tables[0],
+                               wos_columns[1], author.h_index,
+                               wos_columns[2], author.doc_count,
+                               wos_columns[0], author.wos_id))
     conn.commit()
