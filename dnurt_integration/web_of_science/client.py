@@ -19,7 +19,7 @@ class WOSAuthor:
         return self._wos_id
 
     @wos_id.setter
-    def sc_id(self, val):
+    def wos_id(self, val):
         self._wos_id = val
 
     @property
@@ -40,12 +40,13 @@ class WOSAuthor:
 
 
 def get_author_by_id(_id):
-    browser.get('http://www.researcherid.com/rid/{}'.format('A-7364-2016'))
+    browser.get('http://www.researcherid.com/rid/{}'.format(_id))
     div = browser.find_element_by_class_name('publistSet')
     links = div.find_elements_by_tag_name('a')
     links[1].click()
 
     hirsha = 0
+    doc_count = 0
     slept = 2
 
     time.sleep(slept)
@@ -53,7 +54,9 @@ def get_author_by_id(_id):
     while True and slept <= 60:
         try:
             print('in try, slept = ', slept)
-            hirsha = browser.find_element_by_xpath('//*[@id="metrics_hindex"]')
+            hirsha = browser.find_element_by_xpath('//*[@id="metrics_hindex"]').text
+            doc_count = browser.find_element_by_xpath(
+                '//*[@id="metrics_totalArticleCount"]').text
             break
         except NoSuchElementException:
             print('in except, slept = ', slept)
@@ -63,13 +66,16 @@ def get_author_by_id(_id):
     browser.quit()
     author = WOSAuthor(_id)
     author.h_index = hirsha
+    author.doc_count = doc_count
+    print('Hirsha = ', hirsha)
+    print('Doc count = ', doc_count)
     return author
 
 
 def update_db():
-    ids = db.get_sc_authors_ids()
+    ids = db.get_wos_authors_ids()
     for id in ids:
         author = get_author_by_id(id)
-        db.scopus_update(author)
+        db.wos_update(author)
 
     db.disconnect()
