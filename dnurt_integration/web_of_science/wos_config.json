@@ -1,4 +1,4 @@
 {
     "firefox_bin": "/usr/bin/firefox",
-    "is_initialized": true
+    "is_initialized": false
 }
