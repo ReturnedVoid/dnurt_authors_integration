@@ -14,3 +14,7 @@ dnurt_integration/scopus/__pycache__/
 dnurt_integration/web_of_science/__pycache__/
 dnurt_integration/__pycache__/
 /.vscode
+/build
+/dist
+dnurt_authors_integration.egg-info
+geckodriver.log
