@@ -1,7 +1,6 @@
 import json
 
 from elsapy.elsclient import ElsClient
-from elsapy.elsdoc import AbsDoc
 from elsapy.elsprofile import ElsAuthor
 from elsapy.elssearch import ElsSearch
 import os
@@ -30,8 +29,11 @@ class ScopusAuthor:
 
     @property
     def fullname(self):
-        fname = '{} {}'.format(self.author_data['author-profile']['preferred-name']['surname'],
-                               self.author_data['author-profile']['preferred-name']['initials'])
+        fname = '{} {}'.format
+        (
+            self.author_data['author-profile']['preferred-name']['surname'],
+            self.author_data['author-profile']['preferred-name']['initials']
+        )
 
         is_aped = True if "'" in fname else False
         if is_aped:
@@ -87,11 +89,16 @@ class ScopusAuthor:
 
     @property
     def h_index(self):
-        return sum(x >= i + 1 for i, x in enumerate(sorted(self.citations, reverse=True)))
+        return sum(x >= i + 1 for i, x in
+                   enumerate(sorted(self.citations, reverse=True)))
 
     def __str__(self):
-        return '{0} {1} {2} {3} {4}' \
-            .format(self.fullname, self.sc_id, self.doc_count, self.cited_by_count, self.citation_count)
+        return '{0} {1} {2} {3} {4}'.format
+        (
+            self.fullname, self.sc_id,
+            self.doc_count, self.cited_by_count,
+            self.citation_count
+        )
 
 
 def get_author(adata):
@@ -102,7 +109,8 @@ def get_author(adata):
 
 def get_author_by_id(_id):
     my_auth = ElsAuthor(
-        uri='https://api.elsevier.com/content/author/author_id/{0}'.format(_id))
+        uri='https://api.elsevier.com/content/author/author_id/{0}'
+        .format(_id))
     if my_auth.read(api_client):
         return ScopusAuthor(my_auth.data, my_auth.int_id)
     else:
@@ -118,7 +126,10 @@ def fetch_docs_by_author_id(id):
 def clear_logs():
     path = str(Path.home())
     logs_path = '{0}/logs'.format(path)
-    sh.rmtree(logs_path)
+    try:
+        sh.rmtree(logs_path)
+    except FileNotFoundError:
+        pass
 
 
 def update_db():
