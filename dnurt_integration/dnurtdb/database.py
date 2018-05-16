@@ -29,7 +29,7 @@ def init_db():
     is_initialized = data['is_initialized']
     if not is_initialized:
         print('You must input db config...')
-        dbname = input('Data base name: ')
+        dbname = input('Database name: ')
         user = input('User name: ')
         password = input('Db password: ')
 
