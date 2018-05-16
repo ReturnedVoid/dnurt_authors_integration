@@ -3,9 +3,11 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import time
 from selenium.common.exceptions import NoSuchElementException
 from dnurtdb import database as db
+import json
+import os
 
-firefox_binary = FirefoxBinary("/snap/firefox/85/firefox")
-browser = webdriver.Firefox(firefox_binary=firefox_binary)
+WOS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'wos_config.json')
+MAX_WAIT_TIME = 60
 
 
 class WOSAuthor:
@@ -39,7 +41,21 @@ class WOSAuthor:
         self._h_index = val
 
 
+def get_browser():
+    web_driver_path = os.path.join(
+        os.path.dirname(__file__), '..', 'geckodriver')
+
+    with open(WOS_CONFIG_PATH, "r") as jsonFile:
+        data = json.load(jsonFile)
+    firefox_bin_path = data['firefox_bin']
+
+    firefox_binary = FirefoxBinary(firefox_bin_path)
+    return webdriver.Firefox(
+        firefox_binary=firefox_binary, executable_path=web_driver_path)
+
+
 def get_author_by_id(_id):
+    browser = get_browser()
     browser.get('http://www.researcherid.com/rid/{}'.format(_id))
     div = browser.find_element_by_class_name('publistSet')
     links = div.find_elements_by_tag_name('a')
@@ -51,15 +67,16 @@ def get_author_by_id(_id):
 
     time.sleep(slept)
 
-    while True and slept <= 60:
+    while True and slept <= MAX_WAIT_TIME:
         try:
-            print('in try, slept = ', slept)
-            hirsha = browser.find_element_by_xpath('//*[@id="metrics_hindex"]').text
+            hirsha = browser.find_element_by_xpath(
+                '//*[@id="metrics_hindex"]').text
+
             doc_count = browser.find_element_by_xpath(
                 '//*[@id="metrics_totalArticleCount"]').text
+
             break
         except NoSuchElementException:
-            print('in except, slept = ', slept)
             time.sleep(1)
             slept += 1
 
@@ -79,3 +96,20 @@ def update_db():
         db.wos_update(author)
 
     db.disconnect()
+
+
+def init_wos_config():
+    with open(WOS_CONFIG_PATH, "r") as jsonFile:
+        data = json.load(jsonFile)
+
+    is_initialized = data['is_initialized']
+    if not is_initialized:
+        print('You must input firefox bin path...')
+        firefox_bin = input(
+            'Firefox bin path: (normally it`s /usr/bin/firefox): ')
+
+        data['firefox_bin'] = firefox_bin
+        data['is_initialized'] = True
+
+    with open(WOS_CONFIG_PATH, "w") as jsonFile:
+        json.dump(data, jsonFile)
