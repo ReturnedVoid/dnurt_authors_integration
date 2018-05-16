@@ -49,6 +49,7 @@ def update_gscholar():
 def update_wos():
     print('Updating wos info...')
     w_client.update_db()
+    w_client.clear_logs()
     print('Done.')
 
 
