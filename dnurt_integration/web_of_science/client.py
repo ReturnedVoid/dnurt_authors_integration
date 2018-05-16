@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import time
 from selenium.common.exceptions import NoSuchElementException
-from dnurtdb import database as db
+from dnurt_integration.dnurtdb import database as db
 import json
 import os
 
@@ -92,8 +92,9 @@ def get_author_by_id(_id):
 def update_db():
     ids = db.get_wos_authors_ids()
     for id in ids:
-        author = get_author_by_id(id)
-        db.wos_update(author)
+        if id:
+            author = get_author_by_id(id)
+            db.wos_update(author)
 
     db.disconnect()
 
