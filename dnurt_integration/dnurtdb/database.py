@@ -87,15 +87,14 @@ def get_gs_authors_ids():
 
 
 def get_wos_authors_ids():
-    # if connect():
-    #     cursor = get_cursor()
-    #     cursor.execute("""select {0} from {1}""".format(
-    #         wos_columns[0], tables[0]))
-    #     ids = []
-    #     for _id in cursor.fetchall():
-    #         ids.append(_id[0])
-    #     return ids
-    return ['A-7364-2016']
+    if connect():
+        cursor = get_cursor()
+        cursor.execute("""select {0} from {1}""".format(
+            wos_columns[0], tables[0]))
+        ids = []
+        for _id in cursor.fetchall():
+            ids.append(_id[0])
+        return ids
 
 
 def scopus_update(author):
