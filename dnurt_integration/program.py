@@ -6,6 +6,7 @@ from os import system
 from dnurt_integration.scopus import client as sc_client
 from dnurt_integration.web_of_science import client as w_client
 from dnurt_integration.gooscholar import client as g_client
+from dnurt_integration.dnurtdb import database as db
 
 
 def update():
@@ -50,4 +51,6 @@ def update_wos():
 
 
 if __name__ == '__main__':
+    db.init_db()
+    w_client.init_wos_config()
     update()
