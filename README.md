@@ -1,13 +1,10 @@
 # dnurt_integration
 The python module for updating DNURT database using scopus, wos and gscholar api.
 # Installation
-1. Extract the archive.
-2. Change database config in `dnurt_integration/dnurtdb/dbconfig.json`.
-3. Open terminal and type:
 
-    `sudo pip3 install /path/to/extracted/archive` if you want to install package for all users.
+    `sudo pip3 install /path/to/archive` if you want to install package for all users.
     
-    `pip3 install /path/to/extracted/archive --user` if you want to install package for current user.
+    `pip3 install /path/to/archive --user` if you want to install package for current user.
     
     If you have chosen second way, be sure that `$HOME/.local/bin` directory is in your **PATH** system variable.
 # Run script
