@@ -1,6 +1,5 @@
 # Executive module
 import sys
-
 from os import system
 
 from dnurt_integration.scopus import client as sc_client
@@ -10,6 +9,9 @@ from dnurt_integration.dnurtdb import database as db
 
 
 def update():
+    db.init_db()
+    w_client.init_wos_config()
+
     system('clear')
     arg = None
     if sys.argv[1]:
@@ -51,6 +53,4 @@ def update_wos():
 
 
 if __name__ == '__main__':
-    db.init_db()
-    w_client.init_wos_config()
     update()
