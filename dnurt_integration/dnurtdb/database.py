@@ -1,8 +1,31 @@
 import json
 import psycopg2
 import os
+from enum import Enum
+
 
 DB_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'dbconfig.json')
+
+
+class Column(Enum):
+    """Enum for table columns"""
+
+    FULLNAME = 'fullname'
+
+    SCOPUS_ID = 'sc_id'
+    GSCHOLAR_ID = 'gs_id'
+    WOS_ID = 'wos_id'
+
+    HIRSHA_WOS = 'h_wos'
+    HIRSHA_SCOPUS = 'h_scopus'
+    HIRSHA_GSCHOLAR = 'h_gscholar'
+
+    SCOPUS_DOC_COUNT = 'sc_doc_count'
+    GSCHOLAR_DOC_COUNT = 'gs_doc_count'
+    WOS_DOC_COUNT = 'wos_doc_count'
+
+    def __str__(self):
+        return self.value
 
 
 def get_connect_str():
@@ -16,10 +39,6 @@ def get_connect_str():
 conn = None
 
 tables = ('authors',)
-columns = ('id, fullname')
-sc_columns = ('sc_id', 'h_scopus', 'sc_doc_count')
-gs_columns = ('gs_id', 'h_gscholar', 'gs_doc_count')
-wos_columns = ('wos_id', 'h_wos', 'wos_doc_count')
 
 
 def init_db():
@@ -60,7 +79,7 @@ def get_cursor():
 def disconnect():
     try:
         conn.close()
-    except:
+    except Exception:
         print('Error: db connection close()')
 
 
@@ -68,7 +87,7 @@ def get_sc_authors_ids():
     if connect():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
-            sc_columns[0], tables[0]))
+            Column.SCOPUS_ID, tables[0]))
         ids = []
         for _id in cursor.fetchall():
             ids.append(_id[0])
@@ -79,7 +98,7 @@ def get_gs_authors_ids():
     if connect():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
-            gs_columns[0], tables[0]))
+            Column.GSCHOLAR_ID, tables[0]))
         ids = []
         for _id in cursor.fetchall():
             ids.append(_id[0])
@@ -90,7 +109,7 @@ def get_wos_authors_ids():
     if connect():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
-            wos_columns[0], tables[0]))
+            Column.WOS_ID, tables[0]))
         ids = []
         for _id in cursor.fetchall():
             ids.append(_id[0])
@@ -100,31 +119,34 @@ def get_wos_authors_ids():
 def scopus_update(author):
     if connect():
         cursor = get_cursor()
-        cursor.execute("""update {0} set {1}='{2}', {3}='{4}' where {5}='{6}'"""
+        cursor.execute("""update {0} set {1}='{2}',
+                                        {3}='{4}' where {5}='{6}'"""
                        .format(tables[0],
-                               sc_columns[1], author.h_index,
-                               sc_columns[2], author.doc_count,
-                               sc_columns[0], author.sc_id))
+                               Column.HIRSHA_SCOPUS, author.h_index,
+                               Column.SCOPUS_DOC_COUNT, author.doc_count,
+                               Column.SCOPUS_ID, author.sc_id))
     conn.commit()
 
 
 def gscholar_update(author):
     if connect():
         cursor = get_cursor()
-        cursor.execute("""update {0} set {1}='{2}', {3}='{4}' where {5}='{6}'"""
+        cursor.execute("""update {0} set {1}='{2}',
+                                        {3}='{4}' where {5}='{6}'"""
                        .format(tables[0],
-                               gs_columns[1], author.h_index,
-                               gs_columns[2], author.doc_count,
-                               gs_columns[0], author.gs_id))
+                               Column.HIRSHA_GSCHOLAR, author.h_index,
+                               Column.GSCHOLAR_DOC_COUNT, author.doc_count,
+                               Column.GSCHOLAR_ID, author.gs_id))
     conn.commit()
 
 
 def wos_update(author):
     if connect():
         cursor = get_cursor()
-        cursor.execute("""update {0} set {1}='{2}', {3}='{4}' where {5}='{6}'"""
+        cursor.execute("""update {0} set {1}='{2}',
+                                {3}='{4}' where {5}='{6}'"""
                        .format(tables[0],
-                               wos_columns[1], author.h_index,
-                               wos_columns[2], author.doc_count,
-                               wos_columns[0], author.wos_id))
+                               Column.HIRSHA_WOS, author.h_index,
+                               Column.WOS_DOC_COUNT, author.doc_count,
+                               Column.WOS_ID, author.wos_id))
     conn.commit()
