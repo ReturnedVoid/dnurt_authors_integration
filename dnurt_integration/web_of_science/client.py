@@ -5,6 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 from dnurt_integration.dnurtdb import database as db
 import json
 import os
+from pathlib import Path
 
 WOS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'wos_config.json')
 MAX_WAIT_TIME = 60
@@ -112,3 +113,12 @@ def init_wos_config():
 
     with open(WOS_CONFIG_PATH, "w") as jsonFile:
         json.dump(data, jsonFile)
+
+
+def clear_logs():
+    path = str(Path.home())
+    logs_path = '{0}/geckodriver.log'.format(path)
+    try:
+        os.remove(logs_path)
+    except Exception as e:
+        print(e)
