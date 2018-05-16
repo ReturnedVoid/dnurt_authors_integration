@@ -1,5 +1,6 @@
 {
-    "dbname": "postgres",
-    "user": "natus",
-    "password": "1155"
+    "dbname": "",
+    "is_initialized": false,
+    "password": "",
+    "user": ""
 }
