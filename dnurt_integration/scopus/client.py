@@ -26,6 +26,7 @@ class ScopusAuthor:
     def __init__(self, data, _id):
         self.author_data = data
         self.sc_id = _id
+        self.docs = fetch_docs_by_author_id(self.sc_id)
 
     @property
     def fullname(self):
@@ -60,8 +61,7 @@ class ScopusAuthor:
 
     @property
     def doc_count(self):
-        count = self.author_data['coredata']['document-count']
-        return count if count else 0
+        return len(self.docs)
 
     @property
     def cited_by_count(self):
@@ -75,7 +75,11 @@ class ScopusAuthor:
 
     @property
     def docs(self):
-        return fetch_docs_by_author_id(self.sc_id)
+        return self._docs
+
+    @docs.setter
+    def docs(self, val):
+        self._docs = val
 
     @property
     def citations(self):
