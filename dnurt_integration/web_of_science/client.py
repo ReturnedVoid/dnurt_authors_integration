@@ -8,6 +8,8 @@ import os
 
 WOS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'wos_config.json')
 MAX_WAIT_TIME = 60
+HIRSHA_XPATH = '//*[@id="metrics_hindex"]'
+DOC_COUNT_XPATH = '//*[@id="metrics_totalArticleCount"]'
 
 
 class WOSAuthor:
@@ -69,12 +71,8 @@ def get_author_by_id(_id):
 
     while True and slept <= MAX_WAIT_TIME:
         try:
-            hirsha = browser.find_element_by_xpath(
-                '//*[@id="metrics_hindex"]').text
-
-            doc_count = browser.find_element_by_xpath(
-                '//*[@id="metrics_totalArticleCount"]').text
-
+            hirsha = browser.find_element_by_xpath(HIRSHA_XPATH).text
+            doc_count = browser.find_element_by_xpath(DOC_COUNT_XPATH).text
             break
         except NoSuchElementException:
             time.sleep(1)
