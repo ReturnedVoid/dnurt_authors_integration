@@ -17,6 +17,6 @@ setup(name='dnurt_authors_integration',
               ['authors_update = dnurt_integration.program:update']
       },
       package_data={
-          '': ['*.json']
+          '': ['*.json', 'geckodriver']
       }
       )
