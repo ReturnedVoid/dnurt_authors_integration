@@ -18,3 +18,4 @@ dnurt_integration/__pycache__/
 /dist
 dnurt_authors_integration.egg-info
 geckodriver.log
+/test.py
