@@ -121,4 +121,4 @@ def clear_logs():
     try:
         os.remove(logs_path)
     except Exception as e:
-        print(e)
+        pass
