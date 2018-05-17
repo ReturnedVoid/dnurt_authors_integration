@@ -10,11 +10,13 @@ from dnurt_integration.dnurtdb import database as db
 
 from dnurt_integration.dnurtdb.database import DB_CONFIG_PATH
 from dnurt_integration.web_of_science.client import WOS_CONFIG_PATH
+from dnurt_integration.scopus.client import SCOPUS_CONFIG_PATH
 
 
 def update():
     db.init_db()
     w_client.init_wos_config()
+    sc_client.init_sc_config()
 
     system('clear')
     arg = None
@@ -31,6 +33,8 @@ def update():
         reconfigure_db()
     elif arg == '-cw':
         reconfigure_wos()
+    elif arg == '-cs':
+        reconfigure_scopus()
     else:
         update_all()
 
@@ -82,6 +86,17 @@ def reconfigure_wos():
     with open(WOS_CONFIG_PATH, "w") as jsonFile:
         json.dump(data, jsonFile)
     w_client.init_wos_config()
+
+
+def reconfigure_scopus():
+    with open(SCOPUS_CONFIG_PATH, "r") as jsonFile:
+        data = json.load(jsonFile)
+
+    data['is_initialized'] = False
+
+    with open(SCOPUS_CONFIG_PATH, "w") as jsonFile:
+        json.dump(data, jsonFile)
+    sc_client.init_sc_config()
 
 
 if __name__ == '__main__':

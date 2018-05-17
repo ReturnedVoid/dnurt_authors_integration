@@ -17,6 +17,7 @@ con_file.close()
 # -----------constants--------------
 API_KEY = config['apikey']
 DNURT_SCOPUS_ID = config['dnurt_id']
+SCOPUS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config.json')
 # ----------------------------------
 
 # get API client using API_KEY
@@ -150,3 +151,19 @@ def update_db():
         current += 1
 
     db.disconnect()
+
+
+def init_sc_config():
+    with open(SCOPUS_CONFIG_PATH, "r") as jsonFile:
+        data = json.load(jsonFile)
+
+    is_initialized = data['is_initialized']
+    if not is_initialized:
+        print('You must input api key...')
+        apikey = input('Api key: ')
+
+        data['apikey'] = apikey
+        data['is_initialized'] = True
+
+    with open(SCOPUS_CONFIG_PATH, "w") as jsonFile:
+        json.dump(data, jsonFile)
