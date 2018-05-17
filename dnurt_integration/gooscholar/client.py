@@ -1,6 +1,7 @@
 import bs4 as bs
 from dnurt_integration.dnurtdb import database as db
-import urllib.request
+import requests
+from os import system
 
 
 class GscholarAuthor:
@@ -27,9 +28,9 @@ class GscholarAuthor:
 
 
 def get_author_by_id(_id):
-    source = urllib \
-        .request.urlopen('https://scholar.google.com.ua/citations?user={}&hl=en'
-                         .format(_id)).read()
+    source = \
+        requests.get('https://scholar.google.com.ua/citations?user={}&hl=en'
+                     .format(_id)).content
     soup = bs.BeautifulSoup(source, 'lxml')
     tds = soup.find_all('td')
 
@@ -41,9 +42,15 @@ def get_author_by_id(_id):
 
 def update_db():
     ids = db.get_gs_authors_ids()
+    lend = len(ids)
+    current = 1
+
     for _id in ids:
-        if _id:
-            author = get_author_by_id(_id)
-            db.gscholar_update(author)
+        author = get_author_by_id(_id)
+        db.gscholar_update(author)
+        system('clear')
+        print('Updating gscholar info...')
+        print('\tupdated', current, '/', lend, 'authors.')
+        current += 1
 
     db.disconnect()

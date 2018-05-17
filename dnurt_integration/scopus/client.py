@@ -4,6 +4,7 @@ from elsapy.elsclient import ElsClient
 from elsapy.elsprofile import ElsAuthor
 from elsapy.elssearch import ElsSearch
 import os
+from os import system
 import shutil as sh
 from pathlib import Path
 
@@ -138,8 +139,14 @@ def clear_logs():
 
 def update_db():
     ids = db.get_sc_authors_ids()
+    lend = len(ids)
+    current = 1
     for id in ids:
         author = get_author_by_id(id)
         db.scopus_update(author)
+        system('clear')
+        print('Updating scopus info...')
+        print('\tupdated', current, '/', lend, 'authors.')
+        current += 1
 
     db.disconnect()

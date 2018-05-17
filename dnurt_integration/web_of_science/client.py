@@ -5,6 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 from dnurt_integration.dnurtdb import database as db
 import json
 import os
+from os import system
 from pathlib import Path
 
 WOS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'wos_config.json')
@@ -90,10 +91,15 @@ def get_author_by_id(_id):
 
 def update_db():
     ids = db.get_wos_authors_ids()
+    lend = len(ids)
+    current = 1
     for id in ids:
-        if id:
-            author = get_author_by_id(id)
-            db.wos_update(author)
+        author = get_author_by_id(id)
+        db.wos_update(author)
+        system('clear')
+        print('Updating wos info...')
+        print('\tupdated', current, '/', lend, 'authors.')
+        current += 1
 
     db.disconnect()
 
