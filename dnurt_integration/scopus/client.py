@@ -161,7 +161,7 @@ def init_sc_config():
     is_initialized = data['is_initialized']
     if not is_initialized:
         print('You must input api key...')
-        apikey = input('Api key: ')
+        apikey = str(input('Api key: '))
 
         data['apikey'] = apikey
         data['is_initialized'] = True
