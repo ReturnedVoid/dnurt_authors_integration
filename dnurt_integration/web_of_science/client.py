@@ -14,6 +14,8 @@ MAX_WAIT_TIME = 60
 HIRSHA_XPATH = '//*[@id="metrics_hindex"]'
 DOC_COUNT_XPATH = '//*[@id="metrics_totalArticleCount"]'
 
+browser = None
+
 
 class WOSAuthor:
     def __init__(self, _id):
@@ -59,11 +61,11 @@ def get_browser():
         firefox_binary=firefox_binary, executable_path=web_driver_path)
 
 
-browser = get_browser()
-
-
 def get_author_by_id(_id):
+    global browser
 
+    if browser is None:
+        browser = get_browser()
     browser.get('http://www.researcherid.com/rid/{}'.format(_id))
     div = browser.find_element_by_class_name('publistSet')
     links = div.find_elements_by_tag_name('a')
