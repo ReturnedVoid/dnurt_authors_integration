@@ -58,8 +58,11 @@ def get_browser():
         firefox_binary=firefox_binary, executable_path=web_driver_path)
 
 
+browser = get_browser()
+
+
 def get_author_by_id(_id):
-    browser = get_browser()
+
     browser.get('http://www.researcherid.com/rid/{}'.format(_id))
     div = browser.find_element_by_class_name('publistSet')
     links = div.find_elements_by_tag_name('a')
@@ -80,7 +83,6 @@ def get_author_by_id(_id):
             time.sleep(1)
             slept += 1
 
-    browser.quit()
     author = WOSAuthor(_id)
     author.h_index = hirsha
     author.doc_count = doc_count
@@ -100,7 +102,7 @@ def update_db():
         print('Updating wos info...')
         print('\tupdated', current, '/', lend, 'authors.')
         current += 1
-
+    browser.quit()
     db.disconnect()
 
 
