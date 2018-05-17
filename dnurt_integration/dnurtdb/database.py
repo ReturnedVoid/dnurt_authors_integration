@@ -88,10 +88,7 @@ def get_sc_authors_ids():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
             Column.SCOPUS_ID, tables[0]))
-        ids = []
-        for _id in cursor.fetchall():
-            ids.append(_id[0])
-        return ids
+        return [id[0] for id in cursor.fetchall() if id[0]]
 
 
 def get_gs_authors_ids():
@@ -99,10 +96,7 @@ def get_gs_authors_ids():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
             Column.GSCHOLAR_ID, tables[0]))
-        ids = []
-        for _id in cursor.fetchall():
-            ids.append(_id[0])
-        return ids
+        return [id[0] for id in cursor.fetchall() if id[0]]
 
 
 def get_wos_authors_ids():
@@ -110,10 +104,7 @@ def get_wos_authors_ids():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
             Column.WOS_ID, tables[0]))
-        ids = []
-        for _id in cursor.fetchall():
-            ids.append(_id[0])
-        return ids
+    return [id[0] for id in cursor.fetchall() if id[0]]
 
 
 def scopus_update(author):
