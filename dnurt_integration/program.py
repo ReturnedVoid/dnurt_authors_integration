@@ -12,6 +12,7 @@ from dnurt_integration.dnurtdb.database import DB_CONFIG_PATH
 from dnurt_integration.web_of_science.client import WOS_CONFIG_PATH
 from dnurt_integration.scopus.client import SCOPUS_CONFIG_PATH
 
+from multiprocessing import Process
 
 
 def update():
