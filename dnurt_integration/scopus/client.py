@@ -12,18 +12,9 @@ from dnurt_integration.dnurtdb import database as db
 from dnurt_integration.shared import updating_status
 
 
-con_file = open(os.path.join(os.path.dirname(__file__), "config.json"))
-config = json.load(con_file)
-con_file.close()
-
 # -----------constants--------------
-API_KEY = config['apikey']
-DNURT_SCOPUS_ID = config['dnurt_id']
 SCOPUS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config.json')
 # ----------------------------------
-
-# get API client using API_KEY
-api_client = ElsClient(API_KEY)
 
 
 class ScopusAuthor:
@@ -109,6 +100,14 @@ class ScopusAuthor:
         )
 
 
+def get_api_client():
+    con_file = open(os.path.join(os.path.dirname(__file__), "config.json"))
+    config = json.load(con_file)
+    con_file.close()
+    API_KEY = config['apikey']
+    return ElsClient(API_KEY)
+
+
 def get_author(adata):
     """parse search result and return compact info"""
     scopus_author_id = adata['dc:identifier'].split(':')[1]
@@ -119,7 +118,7 @@ def get_author_by_id(_id):
     my_auth = ElsAuthor(
         uri='https://api.elsevier.com/content/author/author_id/{0}'
         .format(_id))
-    if my_auth.read(api_client):
+    if my_auth.read(get_api_client()):
         return ScopusAuthor(my_auth.data, my_auth.int_id)
     else:
         print("Read author failed.")
@@ -127,7 +126,7 @@ def get_author_by_id(_id):
 
 def fetch_docs_by_author_id(id):
     doc_srch = ElsSearch('AU-ID({0})'.format(id), 'scopus')
-    doc_srch.execute(api_client, get_all=True)
+    doc_srch.execute(get_api_client(), get_all=True)
     return doc_srch.results
 
 
@@ -161,7 +160,7 @@ def init_sc_config():
     is_initialized = data['is_initialized']
     if not is_initialized:
         print('You must input api key...')
-        apikey = str(input('Api key: '))
+        apikey = input('Api key: ')
 
         data['apikey'] = apikey
         data['is_initialized'] = True
