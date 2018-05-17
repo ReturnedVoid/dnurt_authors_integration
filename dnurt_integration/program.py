@@ -13,7 +13,7 @@ from dnurt_integration.web_of_science.client import WOS_CONFIG_PATH
 from dnurt_integration.scopus.client import SCOPUS_CONFIG_PATH
 
 from multiprocessing import Process
-from shared import updating_status
+from dnurt_integration.shared import updating_status
 
 import time
 

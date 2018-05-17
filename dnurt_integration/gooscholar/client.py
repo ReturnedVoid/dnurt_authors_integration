@@ -1,7 +1,7 @@
 import bs4 as bs
 from dnurt_integration.dnurtdb import database as db
 import requests
-from shared import updating_status
+from dnurt_integration.shared import updating_status
 
 
 class GscholarAuthor:

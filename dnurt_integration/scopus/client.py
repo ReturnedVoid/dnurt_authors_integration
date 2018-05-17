@@ -9,7 +9,7 @@ import shutil as sh
 from pathlib import Path
 
 from dnurt_integration.dnurtdb import database as db
-from shared import updating_status
+from dnurt_integration.shared import updating_status
 
 
 con_file = open(os.path.join(os.path.dirname(__file__), "config.json"))

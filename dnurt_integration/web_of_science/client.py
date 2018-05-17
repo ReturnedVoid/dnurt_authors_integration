@@ -7,7 +7,7 @@ import json
 import os
 
 from pathlib import Path
-from shared import updating_status
+from dnurt_integration.shared import updating_status
 
 WOS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'wos_config.json')
 MAX_WAIT_TIME = 60
@@ -87,8 +87,8 @@ def get_author_by_id(_id):
             slept += 1
 
     author = WOSAuthor(_id)
-    author.h_index = hirsha
-    author.doc_count = doc_count
+    author.h_index = hirsha if hirsha else 0
+    author.doc_count = doc_count if doc_count else 0
     return author
 
 
