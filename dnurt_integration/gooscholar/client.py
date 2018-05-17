@@ -48,9 +48,9 @@ def update_db():
     for _id in ids:
         author = get_author_by_id(_id)
         db.gscholar_update(author)
-        system('clear')
-        print('Updating gscholar info...')
-        print('\tupdated', current, '/', lend, 'authors.')
+        # system('clear')
+        # print('Updating gscholar info...')
+        print('\tgscholar: updated', current, '/', lend, 'authors.')
         current += 1
 
     db.disconnect()

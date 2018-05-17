@@ -13,6 +13,7 @@ from dnurt_integration.web_of_science.client import WOS_CONFIG_PATH
 from dnurt_integration.scopus.client import SCOPUS_CONFIG_PATH
 
 
+
 def update():
     db.init_db()
     w_client.init_wos_config()
@@ -45,25 +46,31 @@ def update():
 def update_scopus():
     print('Updating scopus info...')
     sc_client.update_db()
-    print('Done.')
+    print('Done scopus updating.')
 
 
 def update_all():
-    update_scopus()
-    update_gscholar()
-    update_wos()
+    # update_scopus()
+    # update_gscholar()
+    # update_wos()
+    p = Process(target=update_gscholar)
+    p1 = Process(target=update_wos)
+    p2 = Process(target=update_scopus)
+    p.start()
+    p1.start()
+    p2.start()
 
 
 def update_gscholar():
     print('Updating gscholar info...')
     g_client.update_db()
-    print('Done.')
+    print('Done gscholar updating.')
 
 
 def update_wos():
     print('Updating wos info...')
     w_client.update_db()
-    print('Done.')
+    print('Done wos updating.')
 
 
 def reconfigure_db():

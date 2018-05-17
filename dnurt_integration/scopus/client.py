@@ -145,9 +145,9 @@ def update_db():
     for id in ids:
         author = get_author_by_id(id)
         db.scopus_update(author)
-        system('clear')
-        print('Updating scopus info...')
-        print('\tupdated', current, '/', lend, 'authors.')
+        # system('clear')
+        # print('Updating scopus info...')
+        print('\tscopus: updated', current, '/', lend, 'authors.')
         current += 1
 
     db.disconnect()

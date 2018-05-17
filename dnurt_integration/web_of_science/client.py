@@ -86,8 +86,6 @@ def get_author_by_id(_id):
     author = WOSAuthor(_id)
     author.h_index = hirsha
     author.doc_count = doc_count
-    print('Hirsha = ', hirsha)
-    print('Doc count = ', doc_count)
     return author
 
 
@@ -98,9 +96,9 @@ def update_db():
     for id in ids:
         author = get_author_by_id(id)
         db.wos_update(author)
-        system('clear')
-        print('Updating wos info...')
-        print('\tupdated', current, '/', lend, 'authors.')
+        # system('clear')
+        # print('Updating wos info...')
+        print('\twos: updated', current, '/', lend, 'authors.')
         current += 1
     browser.quit()
     db.disconnect()
