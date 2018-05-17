@@ -4,11 +4,13 @@ from elsapy.elsclient import ElsClient
 from elsapy.elsprofile import ElsAuthor
 from elsapy.elssearch import ElsSearch
 import os
-from os import system
+
 import shutil as sh
 from pathlib import Path
 
 from dnurt_integration.dnurtdb import database as db
+from shared import updating_status
+
 
 con_file = open(os.path.join(os.path.dirname(__file__), "config.json"))
 config = json.load(con_file)
@@ -142,12 +144,11 @@ def update_db():
     ids = db.get_sc_authors_ids()
     lend = len(ids)
     current = 1
+    updating_status[1] = lend
     for id in ids:
         author = get_author_by_id(id)
         db.scopus_update(author)
-        # system('clear')
-        # print('Updating scopus info...')
-        print('\tscopus: updated', current, '/', lend, 'authors.')
+        updating_status[0] = current
         current += 1
 
     db.disconnect()

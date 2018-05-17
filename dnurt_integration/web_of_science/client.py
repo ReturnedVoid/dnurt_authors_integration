@@ -5,8 +5,9 @@ from selenium.common.exceptions import NoSuchElementException
 from dnurt_integration.dnurtdb import database as db
 import json
 import os
-from os import system
+
 from pathlib import Path
+from shared import updating_status
 
 WOS_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'wos_config.json')
 MAX_WAIT_TIME = 60
@@ -92,13 +93,12 @@ def get_author_by_id(_id):
 def update_db():
     ids = db.get_wos_authors_ids()
     lend = len(ids)
+    updating_status[3] = lend
     current = 1
     for id in ids:
         author = get_author_by_id(id)
         db.wos_update(author)
-        # system('clear')
-        # print('Updating wos info...')
-        print('\twos: updated', current, '/', lend, 'authors.')
+        updating_status[2] = current
         current += 1
     browser.quit()
     db.disconnect()

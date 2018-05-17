@@ -9,8 +9,11 @@ The python module for updating DNURT database using scopus, wos and gscholar api
 If you have chosen second way, be sure that `$HOME/.local/bin` directory is in your **PATH** system variable.
 # Run script
 For running script you can simply type:
-`authors_update -x` where **x** is one of the folowing parameters:
-* `-s` - updates only scopus information.
-* `-w` - updates only wos information. 
-* `-g` - updates only gscholar information.
-* `-a` - updates all.
+`authors_update`
+
+If u need to do some configuration run:
+
+`authors_update` -x where **x** is one of the folowing parameters:
+* `-cb` - change database configuration.
+* `-cw` - change browser binary path. 
+* `-cs` - change scopus apikey.

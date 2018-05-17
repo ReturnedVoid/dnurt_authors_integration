@@ -13,6 +13,9 @@ from dnurt_integration.web_of_science.client import WOS_CONFIG_PATH
 from dnurt_integration.scopus.client import SCOPUS_CONFIG_PATH
 
 from multiprocessing import Process
+from shared import updating_status
+
+import time
 
 
 def update():
@@ -22,56 +25,57 @@ def update():
 
     system('clear')
     arg = None
-    if sys.argv[1]:
+    if len(sys.argv) > 1:
         arg = sys.argv[1]
+    else:
+        update_all()
 
-    if arg == '-s':
-        update_scopus()
-    elif arg == '-g':
-        update_gscholar()
-    elif arg == '-w':
-        update_wos()
-    elif arg == '-cb':
+    if arg == '-cb':
         reconfigure_db()
     elif arg == '-cw':
         reconfigure_wos()
     elif arg == '-cs':
         reconfigure_scopus()
-    else:
-        update_all()
 
     sc_client.clear_logs()
     w_client.clear_logs()
 
 
-def update_scopus():
-    print('Updating scopus info...')
-    sc_client.update_db()
-    print('Done scopus updating.')
-
-
 def update_all():
-    # update_scopus()
-    # update_gscholar()
-    # update_wos()
-    p = Process(target=update_gscholar)
-    p1 = Process(target=update_wos)
-    p2 = Process(target=update_scopus)
-    p.start()
-    p1.start()
-    p2.start()
+    update_scopus_process.start()
+    update_wos_process.start()
+    update_gscholar_process.start()
+    updating_progress_process.start()
 
 
-def update_gscholar():
-    print('Updating gscholar info...')
-    g_client.update_db()
-    print('Done gscholar updating.')
-
-
-def update_wos():
-    print('Updating wos info...')
-    w_client.update_db()
-    print('Done wos updating.')
+def show_updating_progress():
+    wos_completed = False
+    gscholar_completed = False
+    scopus_completed = False
+    time.sleep(1)
+    while True:
+        system('clear')
+        print('Updating scopus info...')
+        print('\tscopus: updated',
+              updating_status[0], '/', updating_status[1], 'authors.')
+        if updating_status[0] == updating_status[1]:
+            print('\tDone scopus updating.')
+            scopus_completed = True
+        print('Updating wos info...')
+        print('\twos: updated',
+              updating_status[2], '/', updating_status[3], 'authors.')
+        if updating_status[2] == updating_status[3]:
+            print('\tDone wos updating.')
+            wos_completed = True
+        print('Updating gscholar info...')
+        print('\tgscholar: updated',
+              updating_status[4], '/', updating_status[5], 'authors.')
+        if updating_status[4] == updating_status[5]:
+            print('\tDone gscholar updating.')
+            gscholar_completed = True
+        if scopus_completed == gscholar_completed == wos_completed is True:
+            break
+        time.sleep(5)
 
 
 def reconfigure_db():
@@ -106,6 +110,11 @@ def reconfigure_scopus():
         json.dump(data, jsonFile)
     sc_client.init_sc_config()
 
+
+update_scopus_process = Process(target=sc_client.update_db)
+update_wos_process = Process(target=w_client.update_db)
+update_gscholar_process = Process(target=g_client.update_db)
+updating_progress_process = Process(target=show_updating_progress)
 
 if __name__ == '__main__':
     update()

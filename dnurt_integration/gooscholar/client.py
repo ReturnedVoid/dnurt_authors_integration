@@ -1,7 +1,7 @@
 import bs4 as bs
 from dnurt_integration.dnurtdb import database as db
 import requests
-from os import system
+from shared import updating_status
 
 
 class GscholarAuthor:
@@ -44,13 +44,11 @@ def update_db():
     ids = db.get_gs_authors_ids()
     lend = len(ids)
     current = 1
-
+    updating_status[5] = lend
     for _id in ids:
         author = get_author_by_id(_id)
         db.gscholar_update(author)
-        # system('clear')
-        # print('Updating gscholar info...')
-        print('\tgscholar: updated', current, '/', lend, 'authors.')
+        updating_status[4] = current
         current += 1
 
     db.disconnect()
