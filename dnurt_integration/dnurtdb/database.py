@@ -28,6 +28,13 @@ class Column(Enum):
         return self.value
 
 
+class Table(Enum):
+    AUTHORS = 'authors'
+
+    def __str__(self):
+        return self.value
+
+
 def get_connect_str():
     with open(DB_CONFIG_PATH, "r") as jsonFile:
         data = json.load(jsonFile)
@@ -37,8 +44,6 @@ def get_connect_str():
 
 
 conn = None
-
-tables = ('authors',)
 
 
 def init_db():
@@ -87,7 +92,7 @@ def get_sc_authors_ids():
     if connect():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
-            Column.SCOPUS_ID, tables[0]))
+            Column.SCOPUS_ID, Table.AUTHORS))
         return [id[0] for id in cursor.fetchall() if id[0]]
 
 
@@ -95,7 +100,7 @@ def get_gs_authors_ids():
     if connect():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
-            Column.GSCHOLAR_ID, tables[0]))
+            Column.GSCHOLAR_ID, Table.AUTHORS))
         return [id[0] for id in cursor.fetchall() if id[0]]
 
 
@@ -103,7 +108,7 @@ def get_wos_authors_ids():
     if connect():
         cursor = get_cursor()
         cursor.execute("""select {0} from {1}""".format(
-            Column.WOS_ID, tables[0]))
+            Column.WOS_ID, Table.AUTHORS))
     return [id[0] for id in cursor.fetchall() if id[0]]
 
 
@@ -112,7 +117,7 @@ def scopus_update(author):
         cursor = get_cursor()
         cursor.execute("""update {0} set {1}='{2}',
                                         {3}='{4}' where {5}='{6}'"""
-                       .format(tables[0],
+                       .format(Table.AUTHORS,
                                Column.HIRSHA_SCOPUS, author.h_index,
                                Column.SCOPUS_DOC_COUNT, author.doc_count,
                                Column.SCOPUS_ID, author.sc_id))
@@ -124,7 +129,7 @@ def gscholar_update(author):
         cursor = get_cursor()
         cursor.execute("""update {0} set {1}='{2}',
                                         {3}='{4}' where {5}='{6}'"""
-                       .format(tables[0],
+                       .format(Table.AUTHORS,
                                Column.HIRSHA_GSCHOLAR, author.h_index,
                                Column.GSCHOLAR_DOC_COUNT, author.doc_count,
                                Column.GSCHOLAR_ID, author.gs_id))
@@ -136,7 +141,7 @@ def wos_update(author):
         cursor = get_cursor()
         cursor.execute("""update {0} set {1}='{2}',
                                 {3}='{4}' where {5}='{6}'"""
-                       .format(tables[0],
+                       .format(Table.AUTHORS,
                                Column.HIRSHA_WOS, author.h_index,
                                Column.WOS_DOC_COUNT, author.doc_count,
                                Column.WOS_ID, author.wos_id))
