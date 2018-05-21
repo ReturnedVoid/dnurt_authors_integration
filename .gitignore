@@ -3,16 +3,7 @@
 /logs
 dnurt_integration/scopus/logs
 /.idea
-dnurt_integration/scopus/__pycache__/
-dnurt_integration/web_of_science/__pycache__/
-dnurt_integration/gooscholar/__pycache__/
-dnurt_integration/dnurtdb/__pycache__/
-dnurt_integration/__pycache__/
-dnurt_integration/dnurtdb/__pycache__/
-dnurt_integration/gooscholar/__pycache__/
-dnurt_integration/scopus/__pycache__/
-dnurt_integration/web_of_science/__pycache__/
-dnurt_integration/__pycache__/
+*.pyc
 /.vscode
 /build
 /dist
