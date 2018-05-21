@@ -2,7 +2,7 @@ import json
 import psycopg2
 import os
 from enum import Enum
-
+import getpass
 
 DB_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'dbconfig.json')
 
@@ -55,7 +55,7 @@ def init_db():
         print('You must input db config...')
         dbname = input('Database name: ')
         user = input('User name: ')
-        password = input('Db password: ')
+        password = getpass.getpass('Db password: ')
 
         data['dbname'] = dbname
         data['user'] = user
