@@ -37,10 +37,6 @@ def update():
     elif arg == '-cs':
         reconfigure_scopus()
 
-    update_scopus_process.join()
-    update_wos_process.join()
-    update_gscholar_process.join()
-    updating_progress_process.join()
     sc_client.clear_logs()
     w_client.clear_logs()
 
@@ -50,6 +46,11 @@ def update_all():
     update_wos_process.start()
     update_gscholar_process.start()
     updating_progress_process.start()
+
+    update_scopus_process.join()
+    update_wos_process.join()
+    update_gscholar_process.join()
+    updating_progress_process.join()
 
 
 def show_updating_progress():
