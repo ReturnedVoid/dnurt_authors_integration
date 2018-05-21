@@ -29,7 +29,7 @@ class Column(Enum):
 
 
 class Table(Enum):
-    AUTHORS = 'authors'
+    AUTHORS = 'library_science_tab_author'
 
     def __str__(self):
         return self.value
