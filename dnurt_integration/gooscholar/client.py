@@ -47,7 +47,8 @@ def update_db():
     updating_status[5] = lend
     for _id in ids:
         author = get_author_by_id(_id)
-        db.gscholar_update(author)
+        if author:
+            db.gscholar_update(author)
         updating_status[4] = current
         current += 1
 

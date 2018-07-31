@@ -99,7 +99,8 @@ def update_db():
     current = 1
     for id in ids:
         author = get_author_by_id(id)
-        db.wos_update(author)
+        if author:
+            db.wos_update(author)
         updating_status[2] = current
         current += 1
     browser.quit()
