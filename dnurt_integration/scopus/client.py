@@ -148,8 +148,8 @@ def update_db():
         author = get_author_by_id(id)
         if author:
             db.scopus_update(author)
-        updating_status[0] = current
-        current += 1
+            updating_status[0] = current
+            current += 1
 
     db.disconnect()
 
