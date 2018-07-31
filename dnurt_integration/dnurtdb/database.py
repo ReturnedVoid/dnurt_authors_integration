@@ -39,7 +39,7 @@ def get_connect_str():
     with open(DB_CONFIG_PATH, "r") as jsonFile:
         data = json.load(jsonFile)
 
-    return "dbname={0} user={1} password={2}" \
+    return "dbname={0} user={1} password={2} host='localhost'" \
         .format(data['dbname'], data['user'], data['password'])
 
 
