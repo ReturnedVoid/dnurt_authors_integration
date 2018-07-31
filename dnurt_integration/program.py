@@ -62,7 +62,7 @@ def show_updating_progress():
         system('clear')
         print('Updating scopus info...')
         print('\tscopus: updated',
-              updating_status[0], '/', updating_status[1], 'authors.')
+              updating_status[6], '/', updating_status[1], 'authors.')
         if updating_status[0] == updating_status[1]:
             print('\tDone scopus updating.')
             scopus_completed = True

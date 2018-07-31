@@ -142,14 +142,17 @@ def clear_logs():
 def update_db():
     ids = db.get_sc_authors_ids()
     lend = len(ids)
-    current = 1
+    current = 0
+    valid = 0
     updating_status[1] = lend
     for id in ids:
         author = get_author_by_id(id)
         if author:
             db.scopus_update(author)
-            updating_status[0] = current
-            current += 1
+            valid += 1
+            updating_status[6] = valid
+        current += 1
+        updating_status[0] = current
 
     db.disconnect()
 
