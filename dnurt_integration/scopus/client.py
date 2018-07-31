@@ -121,7 +121,7 @@ def get_author_by_id(_id):
     if my_auth.read(get_api_client()):
         return ScopusAuthor(my_auth.data, my_auth.int_id)
     else:
-        print("Read author failed.")
+        return None
 
 
 def fetch_docs_by_author_id(id):
@@ -146,7 +146,8 @@ def update_db():
     updating_status[1] = lend
     for id in ids:
         author = get_author_by_id(id)
-        db.scopus_update(author)
+        if author:
+            db.scopus_update(author)
         updating_status[0] = current
         current += 1
 

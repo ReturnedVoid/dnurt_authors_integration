@@ -34,7 +34,6 @@ class Table(Enum):
     def __str__(self):
         return self.value
 
-
 def get_connect_str():
     with open(DB_CONFIG_PATH, "r") as jsonFile:
         data = json.load(jsonFile)
