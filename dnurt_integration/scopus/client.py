@@ -121,6 +121,10 @@ def get_author_by_id(_id):
     if my_auth.read(get_api_client()):
         return ScopusAuthor(my_auth.data, my_auth.int_id)
     else:
+        f_path = '{}/invalid.txt'.format(Path.home())
+        with open(f_path, mode='a') as file:
+            file.write(str(_id))
+            file.write('\n')
         return None
 
 
