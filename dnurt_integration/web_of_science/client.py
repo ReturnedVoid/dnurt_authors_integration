@@ -67,9 +67,15 @@ def get_author_by_id(_id):
     if browser is None:
         browser = get_browser()
     browser.get('http://www.researcherid.com/rid/{}'.format(_id))
-    div = browser.find_element_by_class_name('publistSet')
-    links = div.find_elements_by_tag_name('a')
-    links[1].click()
+
+    # try to fetch author profile
+    try:
+        div = browser.find_element_by_class_name('publistSet')
+        links = div.find_elements_by_tag_name('a')
+        links[1].click()
+    except Exception as e:
+        # TODO add logging here
+        return None
 
     hirsha = 0
     doc_count = 0
